@@ -1,0 +1,121 @@
+{
+	"Methods" :
+	[
+		"Get" : 
+		{
+			"Url" : "/customer?"
+			"ReturnType" : "Customer"
+		}
+		"Post" : 
+		{
+			"Url" : "/customer"
+			"Body" : 
+			"ReturnType" : "Customer"
+		}
+		"Delete" : 
+		{
+			"Url" : "/customer=name"
+			"ReturnType" : "Customer"
+		}
+	]
+	
+	"Entitys" : 
+	[
+		"Entity" : 
+		{
+			"Name" : "Customer"
+			"Propertys" : 
+			[ 
+				{ 
+					"PropertyName" : "Salutation",
+					"PropertyValue" : ""
+					"NotNull" : true
+					"Validator" : 
+					{
+						"Enum" : ["Herr", "Frau"]
+					}
+				}
+				"Property" : 
+				{ 
+					"PropertyName" : "Title",
+					"PropertyValue" : ""
+					"NotNull" : false
+					"Validator" : 
+					{
+						"Enum" : ["Dr.", "Ing."]
+					}
+				}
+				"Property" : 
+				{ 
+					"PropertyName" : "Name",
+					"PropertyValue" : "Meier"
+					"NotNull" : true
+					"Validator" : 
+					{
+						"Regex" : ""
+					}
+				}
+				"Property" : 
+				{ 
+					"PropertyName" : "Surname",
+					"PropertyValue" : "Meier"
+					"NotNull" : true
+					"Validator" : 
+					{
+						"Regex" : ""
+					}
+				}
+				"Property" : 
+				{ 
+					"PropertyName" : "Company",
+					"PropertyValue" : "Meier GmbH"
+					"NotNull" : true
+					"Validator" : 
+					{
+						"Regex" : ""
+					}
+				}
+				"Property" : 
+				{ 
+					"PropertyName" : "Street",
+					"PropertyValue" : "TestStreet"
+					"NotNull" : true
+					"Validator" : 
+					{
+						"Regex" : ""
+					}
+				}
+				"Property" : 
+				{ 
+					"PropertyName" : "PLZ",
+					"PropertyValue" : "0000012"
+					"NotNull" : true
+					"Validator" : 
+					{
+						"Regex" : ""
+					}
+				}
+				"Property" : 
+				{ 
+					"PropertyName" : "City",
+					"PropertyValue" : "TestCity"
+					"NotNull" : true
+					"Validator" : 
+					{
+						"Regex" : ""
+					}
+				}
+				"Property" : 
+				{ 
+					"PropertyName" : "eMail",
+					"PropertyValue" : "Meier@MeierGmbh.net"
+					"NotNull" : false
+					"Validator" : 
+					{
+						"Regex" : ""
+					}
+				}
+			}
+		]
+	]
+}
