@@ -16,13 +16,15 @@ namespace Microservice.CustomerManagement.Service
     {
         private IWebHost mWebHost;
 
-        public void Configure(IConfiguration config)
+        public void Configure(IConfiguration configuration)
         {
+            //var webConfig = configuration.
+
             mWebHost = new WebHostBuilder()
                .UseContentRoot(Directory.GetCurrentDirectory())
                .UseKestrel()
                .UseStartup<Startup>()
-               .UseUrls(config.GetSection("AppSettings").GetValue<string>("BaseUrl.CustomerService"))
+               .UseUrls(configuration.GetSection("AppSettings").GetValue<string>("BaseUrl.CustomerService"))
                .Build();
         }
 

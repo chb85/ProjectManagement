@@ -1,4 +1,5 @@
 ﻿using Microservice.CustomerManagement.Service;
+using Microservice.Interfaces;
 using System;
 using System.Configuration;
 
@@ -8,19 +9,17 @@ namespace Microservice.Management
     {
         static void Main(string[] args)
         {
-            var i = 0;
+            var log = new Logger()
+                .Configure(System.Reflection.Assembly.GetExecutingAssembly().Location + ".config");
 
-            NLog.LogManager.Configuration = new NLog.Config
-                .XmlLoggingConfiguration(System.Reflection.Assembly.GetExecutingAssembly().Location + ".config");
-            var log = NLog.LogManager.GetLogger("TestLogger", typeof(Program));
-
-            var config = NLog.LogManager.Configuration;
-
-            log.Debug("Application started.");
+            log.Debug<Program>("Application started.");
+            log.Info<Program>("Application started.");
+            log.Error<Program>("Application started.");
+            log.Fatal<Program>("Application started.");
 
             // Setup service container
             //var customerService = new CustomerService();
-            
+
 
             // Configure all services and run in extra class/interface.
         }
