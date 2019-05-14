@@ -10,22 +10,22 @@ using System.Text;
 
 namespace Microservice.CustomerManagement.Service
 {
-    internal class Startup
+    public class Startup
     {
         private readonly IConfiguration mConfiguration;
 
         public Startup(IHostingEnvironment enviorment)
         {
-            var configBuilder = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddXmlFile("appconfig.xml");
+			//var configBuilder = new ConfigurationBuilder()
+			//    .SetBasePath(Directory.GetCurrentDirectory())
+			//    .AddXmlFile("appconfig.xml");
 
-            mConfiguration = configBuilder.Build();
-        }
+			//mConfiguration = configBuilder.Build();
+		}
 
         // TODO Configure container -> Logging, etc.
 
-		public void Configure(IApplicationBuilder app, ILoggerFactory loggerFactory)
+		public void Configure(IApplicationBuilder app)
 		{
             app.UseOwin(x => x.UseNancy(opt => opt.Bootstrapper = new NancyBootstrapper(mConfiguration)));
 		}

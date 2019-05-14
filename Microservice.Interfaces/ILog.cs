@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Microservice.Interfaces
+namespace Microservice.Common
 {
     public interface ILog
     {

@@ -7,9 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microservice.CustomerManage
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microservice.CustomerManagement.UnitTest", "Microservice.CustomerManagement.UnitTest\Microservice.CustomerManagement.UnitTest.csproj", "{7F634FDE-C186-4A47-BFBD-9A2D6845C239}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microservice.Interfaces", "Microservice.Interfaces\Microservice.Interfaces.csproj", "{A6C75CCF-6549-4E98-AC1B-CCBEA3542EB4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microservice.Common", "Microservice.Interfaces\Microservice.Common.csproj", "{A6C75CCF-6549-4E98-AC1B-CCBEA3542EB4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microservice.Management", "Microservice.Management\Microservice.Management.csproj", "{E5752A29-FE55-491F-AB20-A65F59BFB446}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microservice.Management", "Microservice.Management\Microservice.Management.csproj", "{E5752A29-FE55-491F-AB20-A65F59BFB446}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
 
-namespace Microservice.Interfaces
+namespace Microservice.Common
 {
     public class Logger : ILog
     {

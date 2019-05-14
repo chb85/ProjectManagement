@@ -1,5 +1,5 @@
-﻿using Microservice.CustomerManagement.Configuration;
-using Microservice.Interfaces;
+﻿using Microservice.Common;
+using Microservice.CustomerManagement.Configuration;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,25 +12,8 @@ using System.Text;
 
 namespace Microservice.CustomerManagement.Service
 {
-    public class CustomerService : IMicroservice
+    public class CustomerService
     {
-        private IWebHost mWebHost;
 
-        public void Configure(IConfiguration configuration)
-        {
-            //var webConfig = configuration.
-
-            mWebHost = new WebHostBuilder()
-               .UseContentRoot(Directory.GetCurrentDirectory())
-               .UseKestrel()
-               .UseStartup<Startup>()
-               .UseUrls(configuration.GetSection("AppSettings").GetValue<string>("BaseUrl.CustomerService"))
-               .Build();
-        }
-
-        public void StartService()
-        {
-            mWebHost.Run();
-        }
-    }
+	}
 }

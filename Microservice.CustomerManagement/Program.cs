@@ -17,10 +17,5 @@ namespace Microservice.CustomerManagement
         {
 
         }
-
-        private static void ConfigureServices(IServiceCollection services)
-        {
-            
-        }
     }
 }

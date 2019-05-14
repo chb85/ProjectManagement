@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Microservice.Interfaces\Microservice.Interfaces.csproj" />
+    <ProjectReference Include="..\Microservice.Interfaces\Microservice.Common.csproj" />
   </ItemGroup>
 
   <ItemGroup>

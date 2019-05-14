@@ -4,42 +4,57 @@ using System.IO;
 using System.Text;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
+using NLog.Web;
 
-namespace Microservice.Interfaces
+namespace Microservice.Common
 {
-    public abstract class MicroserviceBase
-    {
-        private IWebHost mWebHost;
+    public class MicroserviceBase<STARTUP_TYPE> where STARTUP_TYPE : class
+	{
+		private IWebHost mWebHost;
 
-        private readonly ILog mLog;
+		public readonly ILog Log;
 
-        public MicroserviceBase(IConfiguration configuration, ILog log)
+		public string BaseUrl { get; private set; }
+
+		public MicroserviceBase(string baseUrl, ILog log)
         {
-            mLog = log;
-            Configure(configuration);
+			Log = log;
+			BaseUrl = baseUrl;
+		}
+
+        public virtual void StartService()
+        {
+			try
+			{
+				SetupWebHost();
+				mWebHost.Start();
+				Log.Debug($"Service started and listening on {BaseUrl}.");
+			}
+			catch (Exception e)
+			{
+				Log.Error("Error accured during web host start: " + e.Message);
+				throw;
+			}
         }
 
-        public void StartService()
-        {
-            const string ERROR_MESSAGE = "Service can not be started, no host was provided.";
-            if (mWebHost == null)
-            {
-                mLog.Fatal(ERROR_MESSAGE);
-                throw new ApplicationException(ERROR_MESSAGE);
-            }
-
-            mWebHost.Start();
-        }
-
-        private void Configure(IConfiguration config)
-        {
-            mWebHost = new WebHostBuilder()
-               // TODO is tjis nessacery? .UseContentRoot(Directory.GetCurrentDirectory())
-               .UseKestrel()
-               // TODO get Startup from config .UseStartup("")
-               .Build();
-            // TODO use right config section .UseUrls(config.GetSection("AppSettings").GetValue<string>("BaseUrl.CustomerService"))
-
-        }
+		protected virtual void SetupWebHost()
+		{
+			try
+			{
+				mWebHost = new WebHostBuilder()
+					.UseContentRoot(Directory.GetCurrentDirectory())
+					.UseKestrel()
+					.UseUrls(BaseUrl)
+					.UseStartup<STARTUP_TYPE>()
+					.UseNLog()
+					.Build();
+			}
+			catch (Exception e)
+			{
+				Log.Error("Error accured during web host setup:" + e.Message);
+				throw;
+			}
+		}
     }
 }
