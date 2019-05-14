@@ -8,12 +8,14 @@ namespace Microservice.Interfaces
     {
         ILog Configure(string configurationFile);
 
-        void Debug<TYPE>(string message);
+        void Trace(string message);
 
-        void Error<TYPE>(string message);
+        void Debug(string message);
 
-        void Info<TYPE>(string message);
+        void Error(string message);
 
-        void Fatal<TYPE>(string message);
+        void Info(string message);
+
+        void Fatal(string message);
     }
 }

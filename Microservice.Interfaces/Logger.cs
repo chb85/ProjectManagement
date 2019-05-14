@@ -1,6 +1,7 @@
 ﻿using NLog;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 
 namespace Microservice.Interfaces
@@ -13,24 +14,35 @@ namespace Microservice.Interfaces
             return this;
         }
 
-        public void Debug<TYPE>(string message)
+        public void Trace(string message)
         {
-            LogManager.GetLogger(typeof(TYPE).FullName).Debug(message);
+            var stack = new StackFrame(1);
+            LogManager.GetLogger(stack.GetMethod().DeclaringType.FullName).Trace(message);
         }
 
-        public void Info<TYPE>(string message)
+
+        public void Debug(string message)
         {
-            LogManager.GetLogger(typeof(TYPE).FullName).Info(message);
+            var stack = new StackFrame(1);
+            LogManager.GetLogger(stack.GetMethod().DeclaringType.FullName).Debug(message);
         }
 
-        public void Error<TYPE>(string message)
+        public void Info(string message)
         {
-            LogManager.GetLogger(typeof(TYPE).FullName).Error(message);
+            var stack = new StackFrame(1);
+            LogManager.GetLogger(stack.GetMethod().DeclaringType.FullName).Info(message);
         }
 
-        public void Fatal<TYPE>(string message)
+        public void Error(string message)
         {
-            LogManager.GetLogger(typeof(TYPE).FullName).Fatal(message);
+            var stack = new StackFrame(1);
+            LogManager.GetLogger(stack.GetMethod().DeclaringType.FullName).Error(message);
+        }
+
+        public void Fatal(string message)
+        {
+            var stack = new StackFrame(1);
+            LogManager.GetLogger(stack.GetMethod().DeclaringType.FullName).Fatal(message);
         }
     }
 }

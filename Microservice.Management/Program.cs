@@ -12,11 +12,13 @@ namespace Microservice.Management
             var log = new Logger()
                 .Configure(System.Reflection.Assembly.GetExecutingAssembly().Location + ".config");
 
-            log.Debug<Program>("Application started.");
-            log.Info<Program>("Application started.");
-            log.Error<Program>("Application started.");
-            log.Fatal<Program>("Application started.");
+            log.Debug("Application started.");
+            log.Info("Application started.");
+            log.Error("Application started.");
+            log.Fatal("Application started.");
+            log.Trace("Application started.");
 
+            Console.Read();
             // Setup service container
             //var customerService = new CustomerService();
 
