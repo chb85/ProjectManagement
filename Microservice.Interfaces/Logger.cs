@@ -20,7 +20,6 @@ namespace Microservice.Interfaces
             LogManager.GetLogger(stack.GetMethod().DeclaringType.FullName).Trace(message);
         }
 
-
         public void Debug(string message)
         {
             var stack = new StackFrame(1);
