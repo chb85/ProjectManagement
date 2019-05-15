@@ -1,18 +1,14 @@
 ﻿
 using Microservice.Common;
+using Microservice.Common.Logging;
+using Microservice.Management.Configuration;
 using System;
 using System.Configuration;
-using Microservice.CustomerManagement.Service;
-using Microservice.Management.Configuration;
-using Microsoft.Extensions.Configuration;
-using NLog.Web;
-using NLog;
-using Microservice.Common.Logging;
 using System.Reflection;
 
 namespace Microservice.Management
 {
-    class Program
+	class Program
     {
 		private static ILog mLog;
 
@@ -46,11 +42,11 @@ namespace Microservice.Management
 				dynamic instance = Activator.CreateInstance(combinedServiceType, configuration.BaseUrl, mLog);
 				instance.StartService();
 
-				mLog.Debug($"Started service {configuration.Name} listening on {configuration.BaseUrl}");
+				mLog.Debug($"Started service with configuration {configuration.Name} listening on {configuration.BaseUrl}");
 			}
 			catch (Exception e)
 			{
-				mLog.Error($"Error during service startup of service {configuration.Name} on " +
+				mLog.Error($"Error during service startup of service with configuration {configuration.Name} on " +
 					$"{ configuration.BaseUrl}: {e.Message}");
 				throw;
 			}
