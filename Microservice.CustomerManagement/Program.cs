@@ -1,4 +1,4 @@
-﻿using Microservice.CustomerManagement.Configuration;
+﻿using Microservice.CustomerManagement;
 using Microservice.CustomerManagement.Service;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;

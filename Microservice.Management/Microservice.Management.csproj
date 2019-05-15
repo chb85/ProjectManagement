@@ -10,8 +10,4 @@
     <ProjectReference Include="..\Microservice.Interfaces\Microservice.Common.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Configuration\" />
-  </ItemGroup>
-
 </Project>

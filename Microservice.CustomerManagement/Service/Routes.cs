@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Microservice.Common.Logging;
+using Microsoft.Extensions.Configuration;
 using Nancy;
 using System;
 using System.Collections.Generic;
@@ -8,8 +9,10 @@ namespace Microservice.CustomerManagement.Service
 {
     public class Routes : NancyModule
     {
-        public Routes(IConfiguration config) : base("/customers")
+        public Routes(ILog logger) : base("/customers")
         {
+			logger.Debug("Setting up routes.");
+
             Get("/", _ => "Hallo!");
         }
 
