@@ -1,7 +1,7 @@
 ﻿
 using Microservice.Common;
+using Microservice.Common.Configuration;
 using Microservice.Common.Logging;
-using Microservice.Management.Configuration;
 using System;
 using System.Configuration;
 using System.Reflection;
@@ -26,30 +26,21 @@ namespace Microservice.Management
 			}
 			catch (Exception e)
 			{
-				mLog.Error($"Error during program start: {e.Message}");
+				mLog.Error($"Error during program start: {e.Message}\n{e.StackTrace}");
 			}
 
 			Console.Read();
 		}
 
-		private static void StartService(ServiceConfiguration configuration)
-		{
-			try
-			{
-				var microserviceType = typeof(MicroserviceBase<>);
-				var startupType = Type.GetType(configuration.StartupType + ", Microservice.CustomerManagement");
-				var combinedServiceType = microserviceType.MakeGenericType(startupType);
-				dynamic instance = Activator.CreateInstance(combinedServiceType, configuration.BaseUrl, mLog);
-				instance.StartService();
+        private static void StartService(ServiceConfiguration configuration)
+        {
+            var microserviceType = typeof(MicroserviceBase<>);
+            var startupType = Type.GetType(configuration.StartupType + ", " + configuration.Assambly);
+            var combinedServiceType = microserviceType.MakeGenericType(startupType);
+            dynamic instance = Activator.CreateInstance(combinedServiceType, configuration, mLog);
+            instance.StartService();
 
-				mLog.Debug($"Started service with configuration {configuration.Name} listening on {configuration.BaseUrl}");
-			}
-			catch (Exception e)
-			{
-				mLog.Error($"Error during service startup of service with configuration {configuration.Name} on " +
-					$"{ configuration.BaseUrl}: {e.Message}");
-				throw;
-			}
-		}
+            mLog.Debug($"Started service with configuration {configuration.Name} listening on {configuration.BaseUrl}");
+        }
     }
 }

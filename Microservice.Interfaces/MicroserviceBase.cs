@@ -1,4 +1,5 @@
-﻿using Microservice.Common.Logging;
+﻿using Microservice.Common.Configuration;
+using Microservice.Common.Logging;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -17,20 +18,22 @@ namespace Microservice.Common
 
 		private ILog mLog;
 
-		/// <summary>
-		/// The base url and port this host is listening on.
-		/// Format: url:port
-		/// </summary>
-		public string BaseUrl { get; private set; }
+        private ServiceConfiguration mConfiguration;
+
+        /// <summary>
+        /// The base url and port this host is listening on.
+        /// Format: url:port
+        /// </summary>
+        public string BaseUrl { get; private set; }
 
 		/// <summary>
 		/// Initialize a new instance of <see cref="MicroserviceBase[STARTUP_TYPE]"/>.
 		/// </summary>
 		/// <param name="baseUrl">The base url and port where the host should listen.</param>
 		/// <param name="log">The logger.</param>
-		public MicroserviceBase(string baseUrl, ILog log)
+		public MicroserviceBase(ServiceConfiguration config, ILog log)
 		{
-			BaseUrl = baseUrl;
+            mConfiguration = config;
 			mLog = log;
 		}
 
@@ -40,16 +43,8 @@ namespace Microservice.Common
 		/// <exception cref="Exception">Throws an exception when the setup or the start fails.</exception>
 		public virtual void StartService()
 		{
-			try
-			{
 				mWebHost = SetupWebHost();
 				mWebHost.Start();
-			}
-			catch (Exception e)
-			{
-				mLog.Error($"Error during web host start: {e.Message}");
-				throw;
-			}
 		}
 
 		protected virtual IWebHost SetupWebHost()
@@ -57,10 +52,19 @@ namespace Microservice.Common
 			return new WebHostBuilder()
 				.UseContentRoot(Directory.GetCurrentDirectory())
 				.UseKestrel()
-				.UseUrls(BaseUrl)
-				.ConfigureServices(x => x.AddSingleton<ILog>(mLog))
+				.UseUrls(mConfiguration.BaseUrl)
+				.ConfigureServices(x =>
+                {
+                    x.AddSingleton<ILog>(mLog);
+                    x.AddSingleton<ServiceConfiguration>(mConfiguration);
+                })
 				.UseStartup<STARTUP_TYPE>()
 				.Build();
 		}
+
+        protected virtual void SetupDataStore()
+        {
+
+        }
 	}
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Text;
 
-namespace Microservice.Management.Configuration
+namespace Microservice.Common.Configuration
 {
 	public class ServiceConfigurationCollection : ConfigurationElementCollection
 	{
