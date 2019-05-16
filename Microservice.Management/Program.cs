@@ -2,7 +2,9 @@
 using Microservice.Common;
 using Microservice.Common.Configuration;
 using Microservice.Common.Logging;
+using Microservice.Common.Service;
 using System;
+using System.Collections;
 using System.Configuration;
 using System.Reflection;
 
@@ -18,7 +20,7 @@ namespace Microservice.Management
 			{
 				mLog = new ClassLog().Configure(Assembly.GetExecutingAssembly().Location + ".config");
 
-				var serviceConfiguration = (ServiceConfigurationHandler)ConfigurationManager
+				var serviceConfiguration = (ServiceConfigurationSection)ConfigurationManager
 					.GetSection("microserviceConfiguration");
 
 				foreach (ServiceConfiguration configuration in serviceConfiguration.Services)
@@ -35,12 +37,13 @@ namespace Microservice.Management
         private static void StartService(ServiceConfiguration configuration)
         {
             var microserviceType = typeof(MicroserviceBase<>);
-            var startupType = Type.GetType(configuration.StartupType + ", " + configuration.Assambly);
+            var startupType = Type.GetType(configuration.HostConfiguration.StartupType + ", " + configuration.Assambly);
             var combinedServiceType = microserviceType.MakeGenericType(startupType);
             dynamic instance = Activator.CreateInstance(combinedServiceType, configuration, mLog);
             instance.StartService();
 
-            mLog.Debug($"Started service with configuration {configuration.Name} listening on {configuration.BaseUrl}");
+			mLog.Debug($"Started service with configuration {configuration.Name} listening on " +
+				$"{configuration.HostConfiguration.BaseUrl}");
         }
     }
 }

@@ -5,6 +5,8 @@ using System.Text;
 
 namespace Microservice.Common.Configuration
 {
+	[ConfigurationCollection(typeof(ServiceConfiguration), AddItemName = "service", 
+		CollectionType = ConfigurationElementCollectionType.BasicMap)]
 	public class ServiceConfigurationCollection : ConfigurationElementCollection
 	{
 		protected override ConfigurationElement CreateNewElement()

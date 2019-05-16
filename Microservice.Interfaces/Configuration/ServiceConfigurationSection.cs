@@ -6,7 +6,7 @@ using System.Xml;
 
 namespace Microservice.Common.Configuration
 {
-	public class ServiceConfigurationHandler : ConfigurationSection
+	public class ServiceConfigurationSection : ConfigurationSection
 	{
 		private const string SERVICES = "services";
 

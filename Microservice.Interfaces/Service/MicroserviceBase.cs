@@ -5,7 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.IO;
 
-namespace Microservice.Common
+namespace Microservice.Common.Service
 {
 	/// <summary>
 	/// This class is a general implementation of a web host, using the Kestrel server.
@@ -52,7 +52,7 @@ namespace Microservice.Common
 			return new WebHostBuilder()
 				.UseContentRoot(Directory.GetCurrentDirectory())
 				.UseKestrel()
-				.UseUrls(mConfiguration.BaseUrl)
+				.UseUrls(mConfiguration.HostConfiguration.BaseUrl)
 				.ConfigureServices(x =>
                 {
                     x.AddSingleton<ILog>(mLog);

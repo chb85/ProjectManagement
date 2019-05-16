@@ -28,7 +28,6 @@
   <ItemGroup>
     <Folder Include="Domain\" />
     <Folder Include="Interfaces\" />
-    <Folder Include="Persistence\Nhibernate\" />
   </ItemGroup>
 
   <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JSONSchema="" /></VisualStudio></ProjectExtensions>
