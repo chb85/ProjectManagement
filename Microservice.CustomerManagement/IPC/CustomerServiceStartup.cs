@@ -1,6 +1,7 @@
 ﻿using Microservice.Common;
 using Microservice.Common.Configuration;
 using Microservice.Common.Logging;
+using Microservice.CustomerManagement.Bootstrap;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;

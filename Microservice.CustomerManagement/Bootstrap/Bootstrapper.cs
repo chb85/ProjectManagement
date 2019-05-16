@@ -8,7 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Microservice.CustomerManagement.Routes
+namespace Microservice.CustomerManagement.Bootstrap
 {
     internal class Bootstrapper : DefaultNancyBootstrapper
     {
@@ -29,9 +29,12 @@ namespace Microservice.CustomerManagement.Routes
         protected override void ConfigureApplicationContainer(TinyIoCContainer container)
         {
             base.ConfigureApplicationContainer(container);
+
             container.Register<ILog>(mLog);
             container.Register<ServiceConfiguration>(mConfiguration);
-            container.Register<ICustomerService>(new CustomerService());
+            container.Register<IServiceLoader>(new ServiceLoader(container));
+
+            container.Resolve<IServiceLoader>().LoadEnvirorment();
         }
     }
 }

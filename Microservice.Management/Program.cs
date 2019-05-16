@@ -38,6 +38,11 @@ namespace Microservice.Management
         {
             var microserviceType = typeof(MicroserviceBase<>);
             var startupType = Type.GetType(configuration.HostConfiguration.StartupType + ", " + configuration.Assambly);
+
+            if (startupType == null)
+                throw new ApplicationException($"Could not resolve type {configuration.HostConfiguration.StartupType} " +
+                    $"in assambly {configuration.Assambly}. Maybe the configuration has to be changed.");
+     
             var combinedServiceType = microserviceType.MakeGenericType(startupType);
             dynamic instance = Activator.CreateInstance(combinedServiceType, configuration, mLog);
             instance.StartService();

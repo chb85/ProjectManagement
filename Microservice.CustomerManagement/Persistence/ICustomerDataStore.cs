@@ -6,5 +6,6 @@ namespace Microservice.CustomerManagement.Persistence
 {
     public interface ICustomerDataStore
     {
+        void CreateCustomer(string name);
     }
 }
