@@ -1,11 +1,12 @@
-﻿using System;
+﻿using Microservice.CustomerManagement.Service;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Microservice.CustomerManagement.Service
+namespace Microservice.CustomerManagement.Domain.Service
 {
     public class CustomerService : ICustomerService
-    {
+	{
         public string Name { get => "Haalo"; }
     }
 }

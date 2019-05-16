@@ -61,10 +61,5 @@ namespace Microservice.Common.Service
 				.UseStartup<STARTUP_TYPE>()
 				.Build();
 		}
-
-        protected virtual void SetupDataStore()
-        {
-
-        }
 	}
 }

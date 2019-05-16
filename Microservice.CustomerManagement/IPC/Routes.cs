@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Microservice.CustomerManagement.Routes
+namespace Microservice.CustomerManagement.IPC
 {
     public class Routes : NancyModule
     {

@@ -7,7 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Nancy;
 using Nancy.Owin;
 
-namespace Microservice.CustomerManagement.Routes
+namespace Microservice.CustomerManagement.IPC
 {
     public class CustomerServiceStartup
 	{

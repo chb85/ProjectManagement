@@ -1,7 +1,6 @@
 ﻿using Microservice.Common.Configuration;
 using Microservice.Common.Logging;
-using Microservice.CustomerManagement.Persistence;
-using Microservice.CustomerManagement.Persistence.Nhibernate;
+using Microservice.CustomerManagement.Domain.Service;
 using Microservice.CustomerManagement.Service;
 using Nancy;
 using Nancy.TinyIoc;
@@ -32,7 +31,6 @@ namespace Microservice.CustomerManagement.Routes
             base.ConfigureApplicationContainer(container);
             container.Register<ILog>(mLog);
             container.Register<ServiceConfiguration>(mConfiguration);
-			container.Register<ICustomerDataStore>(new CustomerNHibernateDataStore());
             container.Register<ICustomerService>(new CustomerService());
         }
     }
