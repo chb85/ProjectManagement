@@ -4,6 +4,7 @@ using System.Text;
 using Microservice.Common.Configuration;
 using Microservice.Common.Logging;
 using Nancy.TinyIoc;
+using NHibernate.Cfg;
 
 namespace Microservice.CustomerManagement.Bootstrap
 {
@@ -22,7 +23,10 @@ namespace Microservice.CustomerManagement.Bootstrap
 
         public void Configure()
         {
-            mContainer.Resolve<ILog>().Debug("Configuer Nhibernate here and register the session factory on the container.");
+			//Configuration cfg = new Configuration().Configure();
+
+
+			mContainer.Resolve<ILog>().Debug("Configuer Nhibernate here and register the session factory on the container.");
             //configure nhibernate
 
             // register nhibernate data store

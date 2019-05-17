@@ -9,9 +9,7 @@ namespace Microservice.Common.Configuration
 	{
 		private const string NAME = "name";
 
-        private const string ASSAMBLY = "assambly";
-
-		private const string HOSTING_CONFIGURATION = "hostConfiguration";
+		private const string HOSTING_CONFIGURATION = "host";
 
 		private const string DATA_STROE = "dataStore";
 
@@ -22,22 +20,15 @@ namespace Microservice.Common.Configuration
 			set { this[NAME] = value; }
 		}
 
-        [ConfigurationProperty(ASSAMBLY)]
-        public string Assambly
-        {
-            get { return (string)this[ASSAMBLY]; }
-            set { this[ASSAMBLY] = value; }
-        }
-
         [ConfigurationProperty(HOSTING_CONFIGURATION)]
-		public HostConfiguration HostConfiguration
+		public HostConfiguration Host
 		{
 			get { return (HostConfiguration)this[HOSTING_CONFIGURATION]; }
 			set { this[HOSTING_CONFIGURATION] = value; }
 		}
 
 		[ConfigurationProperty(DATA_STROE)]
-		public DataStoreConfiguration DataStoreConfiguration
+		public DataStoreConfiguration DataStore
 		{
 			get { return (DataStoreConfiguration)this[DATA_STROE]; }
 			set { this[DATA_STROE] = value; }

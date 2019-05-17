@@ -11,6 +11,8 @@ namespace Microservice.Common.Configuration
 
 		private const string STARTUP_TYPE = "startupType";
 
+		private const string ASSAMBLY = "assambly";
+
 		[ConfigurationProperty(BASE_URL)]
 		public string BaseUrl
 		{
@@ -23,6 +25,13 @@ namespace Microservice.Common.Configuration
 		{
 			get { return (string)this[STARTUP_TYPE]; }
 			set { this[STARTUP_TYPE] = value; }
+		}
+
+		[ConfigurationProperty(ASSAMBLY)]
+		public string Assambly
+		{
+			get { return (string)this[ASSAMBLY]; }
+			set { this[ASSAMBLY] = value; }
 		}
 	}
 }

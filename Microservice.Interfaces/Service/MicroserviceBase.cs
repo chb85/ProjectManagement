@@ -52,7 +52,7 @@ namespace Microservice.Common.Service
 			return new WebHostBuilder()
 				.UseContentRoot(Directory.GetCurrentDirectory())
 				.UseKestrel()
-				.UseUrls(mConfiguration.HostConfiguration.BaseUrl)
+				.UseUrls(mConfiguration.Host.BaseUrl)
 				.ConfigureServices(x =>
                 {
                     x.AddSingleton<ILog>(mLog);

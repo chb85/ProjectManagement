@@ -34,21 +34,22 @@ namespace Microservice.Management
 			Console.Read();
 		}
 
-        private static void StartService(ServiceConfiguration configuration)
+        private static void StartService(ServiceConfiguration config)
         {
             var microserviceType = typeof(MicroserviceBase<>);
-            var startupType = Type.GetType(configuration.HostConfiguration.StartupType + ", " + configuration.Assambly);
+            var startupType = Type.GetType(config.Host.StartupType + ", " + 
+				config.Host.Assambly);
 
             if (startupType == null)
-                throw new ApplicationException($"Could not resolve type {configuration.HostConfiguration.StartupType} " +
-                    $"in assambly {configuration.Assambly}. Maybe the configuration has to be changed.");
+                throw new ApplicationException($"Could not resolve type {config.Host.StartupType} " +
+                    $"in assambly {config.Host.Assambly}. Maybe the configuration has to be changed.");
      
             var combinedServiceType = microserviceType.MakeGenericType(startupType);
-            dynamic instance = Activator.CreateInstance(combinedServiceType, configuration, mLog);
+            dynamic instance = Activator.CreateInstance(combinedServiceType, config, mLog);
             instance.StartService();
 
-			mLog.Debug($"Started service with configuration {configuration.Name} listening on " +
-				$"{configuration.HostConfiguration.BaseUrl}");
+			mLog.Debug($"Started service with configuration {config.Name} listening on " +
+				$"{config.Host.BaseUrl}");
         }
     }
 }

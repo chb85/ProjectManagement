@@ -7,22 +7,40 @@ namespace Microservice.Common.Configuration
 {
     public class DataStoreConfiguration : ConfigurationElement
 	{
-		private const string IMPLEMENTING_TYPE = "startupType";
+		private const string IMPLEMENTING_TYPE = "dsConfigType";
 
-        private const string CONNECTION_STRING = "connection";
+        private const string CONFIG_FILE = "dsConfigFile";
 
-        [ConfigurationProperty(IMPLEMENTING_TYPE)]
-		public string StartupType
+		private const string ASSAMBLY = "assambly";
+
+		private const string CONNECTION_STRING = "connectionstring";
+
+		[ConfigurationProperty(IMPLEMENTING_TYPE)]
+		public string ConfigurationType
         {
 			get { return (string)this[IMPLEMENTING_TYPE]; }
 			set { this[IMPLEMENTING_TYPE] = value; }
 		}
 
-        [ConfigurationProperty(CONNECTION_STRING)]
-        public string Connection
-        {
-            get { return (string)this[CONNECTION_STRING]; }
-            set { this[CONNECTION_STRING] = value; }
-        }
-    }
+		[ConfigurationProperty(ASSAMBLY)]
+		public string Assambly
+		{
+			get { return (string)this[ASSAMBLY]; }
+			set { this[ASSAMBLY] = value; }
+		}
+
+		[ConfigurationProperty(CONFIG_FILE)]
+		public string ConfigFileLocation
+		{
+			get { return (string)this[CONFIG_FILE]; }
+			set { this[CONFIG_FILE] = value; }
+		}
+
+		[ConfigurationProperty(CONNECTION_STRING)]
+		public string ConnectionString
+		{
+			get { return (string)this[CONNECTION_STRING]; }
+			set { this[CONNECTION_STRING] = value; }
+		}
+	}
 }
