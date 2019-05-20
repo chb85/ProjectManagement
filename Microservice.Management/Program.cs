@@ -1,5 +1,6 @@
 ﻿
 using Microservice.Common;
+using Microservice.CustomerManagement;
 using Microservice.Common.Configuration;
 using Microservice.Common.Logging;
 using Microservice.Common.Service;
@@ -7,6 +8,10 @@ using System;
 using System.Collections;
 using System.Configuration;
 using System.Reflection;
+using FluentNHibernate.Cfg;
+using FluentNHibernate.Cfg.Db;
+using NHibernate.Tool.hbm2ddl;
+using Microservice.CustomerManagement.Persistence.Nhibernate.Data;
 
 namespace Microservice.Management
 {
@@ -18,14 +23,17 @@ namespace Microservice.Management
 		{
 			try
 			{
-				mLog = new ClassLog().Configure(Assembly.GetExecutingAssembly().Location + ".config");
+                mLog = new ClassLog().Configure(Assembly.GetExecutingAssembly().Location + ".config");
 
-				var serviceConfiguration = (ServiceConfigurationSection)ConfigurationManager
-					.GetSection("microserviceConfiguration");
+                var serviceConfiguration = (ServiceConfigurationSection)ConfigurationManager
+                    .GetSection("microserviceConfiguration");
 
-				foreach (ServiceConfiguration configuration in serviceConfiguration.Services)
-					StartService(configuration);
-			}
+                foreach (ServiceConfiguration configuration in serviceConfiguration.Services)
+                {
+                    StartService(configuration);
+                }
+                    
+            }
 			catch (Exception e)
 			{
 				mLog.Error($"Error during program start: {e.Message}\n{e.StackTrace}");
