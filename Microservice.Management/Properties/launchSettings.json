@@ -1,0 +1,7 @@
+{
+  "profiles": {
+    "Microservice.Management": {
+      "commandName": "Project"
+    }
+  }
+}
