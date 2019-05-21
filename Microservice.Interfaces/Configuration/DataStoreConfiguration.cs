@@ -13,6 +13,8 @@ namespace Microservice.Common.Configuration
 
 		private const string ASSAMBLY = "assambly";
 
+		private const string MAPPING_ASSAMBLY = "mappingAssambly";
+
 		private const string CONNECTION_STRING = "connectionstring";
 
 		[ConfigurationProperty(IMPLEMENTING_TYPE)]
@@ -41,6 +43,13 @@ namespace Microservice.Common.Configuration
 		{
 			get { return (string)this[CONNECTION_STRING]; }
 			set { this[CONNECTION_STRING] = value; }
+		}
+
+		[ConfigurationProperty(MAPPING_ASSAMBLY)]
+		public string MappingAssambly
+		{
+			get { return (string)this[MAPPING_ASSAMBLY]; }
+			set { this[MAPPING_ASSAMBLY] = value; }
 		}
 	}
 }

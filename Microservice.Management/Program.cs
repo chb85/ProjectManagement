@@ -2,10 +2,12 @@
 using CommandLine;
 using Microservice.Common;
 using Microservice.Common.Configuration;
+using Microservice.Common.DataStore;
 using Microservice.Common.Logging;
 using Microservice.Common.Service;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using System.Reflection;
@@ -16,25 +18,32 @@ namespace Microservice.Management
     {
 		private static ILog mLog;
 
+		private static  ServiceConfigurationSection mServiceConfiguration;
+
 		static void Main(string[] args)
 		{
 			try
 			{
+				mLog = new ClassLog().Configure(Assembly.GetExecutingAssembly().Location + ".config");
+
+				mServiceConfiguration = (ServiceConfigurationSection)ConfigurationManager
+					.GetSection("microserviceConfiguration");
+
 				var options = Parser.Default.ParseArguments<Options>(args)
 					.WithParsed<Options>(o =>
 					{
 						if (o.CreateDataBases.Any())
 						{
-
+							CreateDataStores(o.CreateDataBases);
 							return;
 						}
 						else if (o.UpdateDataBases.Any())
 						{
-
+							UpdateDataStores(o.UpdateDataBases);
 							return;
 						}
 
-						Run();
+						RunServices();
 					});
 			}
 			catch (Exception e)
@@ -45,15 +54,32 @@ namespace Microservice.Management
 			Console.Read();
 		}
 
-		private static void Run()
+		private static void RunServices()
 		{
-			mLog = new ClassLog().Configure(Assembly.GetExecutingAssembly().Location + ".config");
-
-			var serviceConfiguration = (ServiceConfigurationSection)ConfigurationManager
-				.GetSection("microserviceConfiguration");
-
-			foreach (ServiceConfiguration configuration in serviceConfiguration.Services)
+			foreach (ServiceConfiguration configuration in mServiceConfiguration.Services)
 				StartService(configuration);
+		}
+
+		private static void CreateDataStores(IEnumerable<string> createDataBases)
+		{
+			foreach (var serviceName in createDataBases)
+			{
+				var serviceconfig = mServiceConfiguration.Services.Cast<ServiceConfiguration>()
+					.FirstOrDefault(s => s.Name == serviceName);
+
+				new DataBaseBuilder().CreateDataBase(serviceconfig.DataStore);
+			}
+		}
+
+		private static void UpdateDataStores(IEnumerable<string> createDataBases)
+		{
+			foreach (var serviceName in createDataBases)
+			{
+				var serviceconfig = mServiceConfiguration.Services.Cast<ServiceConfiguration>()
+					.FirstOrDefault(s => s.Name == serviceName);
+
+				new DataBaseBuilder().UpdateDataBase(serviceconfig.DataStore);
+			}
 		}
 
 		private static void StartService(ServiceConfiguration config)
