@@ -17,7 +17,6 @@ namespace Microservice.CustomerManagement.Bootstrap
     {
         private TinyIoCContainer mEnvirorment;
 
-
         public ServiceLoader(TinyIoCContainer container)
         {
             mEnvirorment = container;
@@ -28,7 +27,7 @@ namespace Microservice.CustomerManagement.Bootstrap
 			var config = mEnvirorment.Resolve<ServiceConfiguration>();
 			var dataStoreType = Type.GetType(config.DataStore.ConfigurationType + ", " + config.DataStore.Assambly);
 			var dataStoreConfigurator = (IDataStoreConfigurator)Activator
-				.CreateInstance(dataStoreType);
+				.CreateInstance(dataStoreType, mEnvirorment.Resolve<ILog>());
 
 			if (dataStoreConfigurator == null)
 				throw new ApplicationException($"Error resolving data stroe configuration." +

@@ -1,13 +1,10 @@
 ﻿using FluentNHibernate.Cfg;
 using FluentNHibernate.Cfg.Db;
 using Microservice.Common.Configuration;
-using NHibernate;
+using Microservice.Common.Logging;
 using NHibernate.Tool.hbm2ddl;
 using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Reflection;
-using System.Text;
 
 namespace Microservice.Common.DataStore.Nhibernate
 {
@@ -15,7 +12,14 @@ namespace Microservice.Common.DataStore.Nhibernate
 	{
         private NHibernate.Cfg.Configuration mConfiguration;
 
-		public IDataStoreSession Configure(DataStoreConfiguration config)
+        private ILog mLog;
+
+        public NHibernateMsSQLConfigurator(ILog log)
+        {
+            mLog = log;
+        }
+
+        public IDataStoreSession Configure(DataStoreConfiguration config)
 		{
 			var sessionFactory = Fluently.Configure()
 				.Database(MsSqlConfiguration.MsSql2012.ConnectionString(
@@ -24,7 +28,7 @@ namespace Microservice.Common.DataStore.Nhibernate
 				.ExposeConfiguration(x => mConfiguration = x)
 				.BuildSessionFactory();
 
-			return new NhibernateSession(sessionFactory);
+			return new NhibernateSession(sessionFactory, mLog);
 		}
 
 		public void CreateDataStore()
@@ -34,11 +38,10 @@ namespace Microservice.Common.DataStore.Nhibernate
 					"pleas configure NHibernate first. (Maybe call Configure())");
 
 			new SchemaExport(mConfiguration)
-				.SetOutputFile(@"C:\test.txt")
-				.Execute(false, true, false);
+				.Execute(true, true, false);
 		}
 
-		public void UpdateDataStore()
+        public void UpdateDataStore()
 		{
 			if (mConfiguration == null)
 				throw new ApplicationException("No configuration provided, " +

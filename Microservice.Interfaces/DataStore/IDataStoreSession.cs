@@ -8,8 +8,8 @@ namespace Microservice.Common.DataStore
     {
 		IEnumerable<T> Query<T>();
 
-		void Update<T>();
+        void CreateOrUpdate<T>(T definition);
 
-		void Delete<T>();
+        void Delete<T>();
 	}
 }

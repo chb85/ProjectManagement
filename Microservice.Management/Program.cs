@@ -35,6 +35,7 @@ namespace Microservice.Management
 						if (o.CreateDataBases.Any())
 						{
 							CreateDataStores(o.CreateDataBases);
+                            mLog.Debug("Database was created...");
 							return;
 						}
 						else if (o.UpdateDataBases.Any())

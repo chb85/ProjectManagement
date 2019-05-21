@@ -1,8 +1,7 @@
 {
   "profiles": {
     "Microservice.Management": {
-      "commandName": "Project",
-      "commandLineArgs": "-c CustomerService"
+      "commandName": "Project"
     }
   }
 }
