@@ -1,4 +1,5 @@
 ﻿using Microservice.Common.Configuration;
+using Microservice.Common.Logging;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -11,7 +12,7 @@ namespace Microservice.Common.DataStore
 		{
 			var dataStoreType = Type.GetType(config.ConfigurationType + ", " + config.Assambly);
 			var dataStoreConfigurator = (IDataStoreConfigurator)Activator
-			.CreateInstance(dataStoreType);
+			.CreateInstance(dataStoreType, new ClassLog());
 
 			dataStoreConfigurator.Configure(config);
 			dataStoreConfigurator.CreateDataStore();

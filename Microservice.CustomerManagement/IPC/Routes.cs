@@ -5,50 +5,46 @@ using Microservice.CustomerManagement.Service;
 using Microsoft.Extensions.Configuration;
 using Nancy;
 using Nancy.TinyIoc;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 
 namespace Microservice.CustomerManagement.IPC
 {
     public class Routes : NancyModule
     {
-        private TinyIoCContainer mContainer;
-
-        private ILog mLog;
-
-        public Routes(TinyIoCContainer servcie, ILog logger) : base("/customers")
+        public Routes(ICustomerService servcie) : base("/customers")
         {
-            mContainer = servcie;
-            mLog = logger;
+			Get("/", _ => GetCustomers(servcie));
 
-            Post("/", _ => CreateCustomer());
+			Post("/", _ => CreateCustomer(servcie, Deserialize(Request.Body)));
         }
 
-        private bool CreateCustomer()
+        private bool CreateCustomer(ICustomerService service, Customer customer)
         {
-            mContainer.Resolve<IDataStoreSession>().CreateOrUpdate<Customer>(
-                new Customer
-                {
-                    Id = new Guid("5BEAFB18-0112-4327-A585-1DE5DEF0F732"),
-                    Title = "Prof.",
-                    Company = "Test GmbH",
-                    City = "Testtown",
-                    Country = "Testland",
-                    CustomerId = "1",
-                    EMail = "test@test.de",
-                    MobilePhone = "0101010101010",
-                    Name = "Testperson",
-                    Postcode  = "0000000",
-                    Salutation = "Herr",
-                    Street = "Teststrret",
-                    Surname = "Heiner",
-                    Phone = "000000000000"
-                });
-
             return true;
         }
 
+		private IEnumerable<Customer> GetCustomers(ICustomerService service)
+		{
+			return null;
+		}
 
-    }
+		public Customer Deserialize(Stream body)
+		{
+			try
+			{
+				using (var reader = new StreamReader(body))
+					return JsonConvert.DeserializeObject<Customer>(reader.ReadToEnd());
+			}
+			catch (Exception ex)
+			{
+				mLog.Error($"The group usage specification deserializing has failed due to: {ex.Message}");
+				throw;
+			}
+		}
+
+	}
 }

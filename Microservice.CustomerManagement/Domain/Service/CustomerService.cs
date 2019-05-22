@@ -1,4 +1,5 @@
-﻿using Microservice.CustomerManagement.Service;
+﻿using Microservice.CustomerManagement.Persistence.Nhibernate.Data;
+using Microservice.CustomerManagement.Service;
 using Nancy.TinyIoc;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,11 @@ namespace Microservice.CustomerManagement.Domain.Service
             mContainer = container;
         }
 
-        public string Name { get => "Haalo"; }
-    }
+		public IEnumerable<Customer> GetCustomers()
+		{
+			//Query from pool and return
+
+			throw new NotImplementedException();
+		}
+	}
 }
