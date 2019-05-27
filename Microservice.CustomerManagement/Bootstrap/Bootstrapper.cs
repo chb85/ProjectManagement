@@ -1,9 +1,9 @@
 ﻿using Microservice.Common.Configuration;
-using Microservice.Common.Logging;
 using Microservice.CustomerManagement.Domain.Service;
 using Microservice.CustomerManagement.Service;
 using Nancy;
 using Nancy.TinyIoc;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -12,17 +12,14 @@ namespace Microservice.CustomerManagement.Bootstrap
 {
     internal class Bootstrapper : DefaultNancyBootstrapper
     {
-        private readonly ILog mLog;
-
         private readonly ServiceConfiguration mConfiguration;
 
         /// <summary>
         /// Initialize a new instance of the class <see cref="CommonBootstrapper"/>.
         /// </summary>
         /// <param name="log">The logger to apply to the injection container.</param>
-        public Bootstrapper(ServiceConfiguration config ,ILog log)
+        public Bootstrapper(ServiceConfiguration config)
         {
-            mLog = log;
             mConfiguration = config;
         }
 
@@ -30,7 +27,6 @@ namespace Microservice.CustomerManagement.Bootstrap
         {
             base.ConfigureApplicationContainer(container);
 
-            container.Register<ILog>(mLog);
             container.Register<ServiceConfiguration>(mConfiguration);
             container.Register<IServiceLoader>(new ServiceLoader(container));
 

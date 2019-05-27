@@ -1,8 +1,8 @@
 ﻿using FluentNHibernate.Cfg;
 using FluentNHibernate.Cfg.Db;
 using Microservice.Common.Configuration;
-using Microservice.Common.Logging;
 using NHibernate.Tool.hbm2ddl;
+using NLog;
 using System;
 using System.Reflection;
 
@@ -12,12 +12,7 @@ namespace Microservice.Common.DataStore.Nhibernate
 	{
         private NHibernate.Cfg.Configuration mConfiguration;
 
-        private ILog mLog;
-
-        public NHibernateMsSQLConfigurator(ILog log)
-        {
-            mLog = log;
-        }
+        private ILogger mLog = LogManager.GetCurrentClassLogger();
 
         public IDataStoreSession Configure(DataStoreConfiguration config)
 		{
@@ -28,7 +23,7 @@ namespace Microservice.Common.DataStore.Nhibernate
 				.ExposeConfiguration(x => mConfiguration = x)
 				.BuildSessionFactory();
 
-			return new NhibernateSession(sessionFactory, mLog);
+			return new NhibernateSession(sessionFactory);
 		}
 
 		public void CreateDataStore()

@@ -1,12 +1,12 @@
 ﻿using Microservice.Common.Configuration;
 using Microservice.Common.DataStore;
-using Microservice.Common.Logging;
 using Microservice.CustomerManagement.Domain.Service;
 using Microservice.CustomerManagement.Persistence;
 using Microservice.CustomerManagement.Persistence.Nhibernate;
 using Microservice.CustomerManagement.Service;
 using Nancy.TinyIoc;
 using NHibernate;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -27,7 +27,7 @@ namespace Microservice.CustomerManagement.Bootstrap
 			var config = mEnvirorment.Resolve<ServiceConfiguration>();
 			var dataStoreType = Type.GetType(config.DataStore.ConfigurationType + ", " + config.DataStore.Assambly);
 			var dataStoreConfigurator = (IDataStoreConfigurator)Activator
-				.CreateInstance(dataStoreType, mEnvirorment.Resolve<ILog>());
+				.CreateInstance(dataStoreType);
 
 			if (dataStoreConfigurator == null)
 				throw new ApplicationException($"Error resolving data stroe configuration." +

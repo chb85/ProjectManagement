@@ -1,5 +1,4 @@
-﻿using Microservice.Common.Logging;
-using Microservice.Common.Service;
+﻿using Microservice.Common.Service;
 using NUnit.Framework;
 using System;
 

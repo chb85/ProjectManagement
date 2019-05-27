@@ -3,8 +3,8 @@ using CommandLine;
 using Microservice.Common;
 using Microservice.Common.Configuration;
 using Microservice.Common.DataStore;
-using Microservice.Common.Logging;
 using Microservice.Common.Service;
+using NLog;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -16,7 +16,7 @@ namespace Microservice.Management
 {
 	class Program
     {
-		private static ILog mLog;
+		private static ILogger mLog;
 
 		private static  ServiceConfigurationSection mServiceConfiguration;
 
@@ -24,9 +24,11 @@ namespace Microservice.Management
 		{
 			try
 			{
-				mLog = new ClassLog().Configure(Assembly.GetExecutingAssembly().Location + ".config");
+				var logConfig = Assembly.GetExecutingAssembly().Location + ".config";
+                LogManager.Configuration = new NLog.Config.XmlLoggingConfiguration(logConfig);
+                mLog = LogManager.GetCurrentClassLogger();
 
-				mServiceConfiguration = (ServiceConfigurationSection)ConfigurationManager
+                mServiceConfiguration = (ServiceConfigurationSection)ConfigurationManager
 					.GetSection("microserviceConfiguration");
 
 				var options = Parser.Default.ParseArguments<Options>(args)
@@ -36,6 +38,7 @@ namespace Microservice.Management
 						{
 							CreateDataStores(o.CreateDataBases);
                             mLog.Debug("Database was created...");
+
 							return;
 						}
 						else if (o.UpdateDataBases.Any())
@@ -49,7 +52,7 @@ namespace Microservice.Management
 			}
 			catch (Exception e)
 			{
-				mLog.Error($"Error during program start: {e.Message}\n{e.StackTrace}");
+				mLog.Error($"{e.Message}\n{e.StackTrace}");
 			}
 
 			Console.Read();
@@ -94,7 +97,7 @@ namespace Microservice.Management
                     $"in assambly {config.Host.Assambly}. Maybe the configuration has to be changed.");
      
             var combinedServiceType = microserviceType.MakeGenericType(startupType);
-            dynamic instance = Activator.CreateInstance(combinedServiceType, config, mLog);
+            dynamic instance = Activator.CreateInstance(combinedServiceType, config);
             instance.StartService();
 
 			mLog.Debug($"Started service with configuration {config.Name} listening on " +

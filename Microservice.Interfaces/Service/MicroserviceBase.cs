@@ -1,7 +1,7 @@
 ﻿using Microservice.Common.Configuration;
-using Microservice.Common.Logging;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
+using NLog;
 using System;
 using System.IO;
 
@@ -16,7 +16,7 @@ namespace Microservice.Common.Service
 	{
 		private IWebHost mWebHost;
 
-		private ILog mLog;
+        private ILogger mLog = LogManager.GetCurrentClassLogger();
 
         private ServiceConfiguration mConfiguration;
 
@@ -31,10 +31,9 @@ namespace Microservice.Common.Service
 		/// </summary>
 		/// <param name="baseUrl">The base url and port where the host should listen.</param>
 		/// <param name="log">The logger.</param>
-		public MicroserviceBase(ServiceConfiguration config, ILog log)
+		public MicroserviceBase(ServiceConfiguration config)
 		{
             mConfiguration = config;
-			mLog = log;
 		}
 
 		/// <summary>
@@ -55,7 +54,7 @@ namespace Microservice.Common.Service
 				.UseUrls(mConfiguration.Host.BaseUrl)
 				.ConfigureServices(x =>
                 {
-                    x.AddSingleton<ILog>(mLog);
+                    x.AddSingleton<ILogger>(mLog);
                     x.AddSingleton<ServiceConfiguration>(mConfiguration);
                 })
 				.UseStartup<STARTUP_TYPE>()

@@ -1,5 +1,5 @@
-﻿using Microservice.Common.Logging;
-using NHibernate;
+﻿using NHibernate;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -10,11 +10,10 @@ namespace Microservice.Common.DataStore.Nhibernate
 	{
 		private ISessionFactory mSessionFactory;
 
-        private ILog mLog;
+        private ILogger mLog = LogManager.GetCurrentClassLogger(); 
 
-        public NhibernateSession(ISessionFactory factory, ILog logger)
+        public NhibernateSession(ISessionFactory factory)
 		{
-            mLog = logger;
             mSessionFactory = factory;
 		}
 

@@ -1,11 +1,11 @@
 ﻿using Microservice.Common.DataStore;
-using Microservice.Common.Logging;
 using Microservice.CustomerManagement.Persistence.Nhibernate.Data;
 using Microservice.CustomerManagement.Service;
 using Microsoft.Extensions.Configuration;
 using Nancy;
 using Nancy.TinyIoc;
 using Newtonsoft.Json;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -15,6 +15,8 @@ namespace Microservice.CustomerManagement.IPC
 {
     public class Routes : NancyModule
     {
+        private ILogger mLog = LogManager.GetCurrentClassLogger();
+
         public Routes(ICustomerService servcie) : base("/customers")
         {
 			Get("/", _ => GetCustomers(servcie));
